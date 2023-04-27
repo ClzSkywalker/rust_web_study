@@ -1,3 +1,4 @@
-hello: Hello world # A simple key -> value mapping
+Hello: Hello world # A simple key -> value mapping
+System: systemaaa
 messages:
   hello: Hello, %{name} # A nested key.sub_key -> value mapping, in this case "messages.hello" maps to "Hello, %{name}"

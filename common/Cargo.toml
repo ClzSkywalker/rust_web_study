@@ -11,10 +11,13 @@ path="./src/lib.rs"
 [dependencies]
 # json
 serde = "1.0.160"
+# 单例
+once_cell = "1.17.0"
+# 枚举转字符串
+strum = "0.24"
+strum_macros = "0.24"
 # i18n
 # fluent-bundle = "0.15.2"
-# 单例模式
-# once_cell = "1.17.1"
 # 将资源文件加载到可执行文件中
 # rust-embed = "6.6.1"
 # 用于管理Unicode语言标识符的API``

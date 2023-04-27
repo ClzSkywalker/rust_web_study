@@ -1,31 +1,21 @@
+use std::fmt;
+
+use super::i18n_key::ErrorKey;
+
+/**
+ * @Author         : ClzSkywalker
+ * @Date           : 2023-04-27
+ * @Description    : 内部错误
+ * @return          {*}
+ */
+#[derive(Debug)]
 pub struct CodeError {
-    code: i32,
-    msg: String,
-    field: Vec<String>,
+    key: ErrorKey,
+    field: Vec<(String, String)>,
 }
 
-struct ErrorLangInfo {
-    id: i32,
-    lang: String,
-    msg: String,
+impl fmt::Display for CodeError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "key:{}", self.key as i32)
+    }
 }
-
-pub enum ErrorEnum {
-    // TaskNotfound { info: ErrorLangInfo{} },
-}
-
-// pub fn trans(lang: &str, ce: &mut CodeError) {
-//     let lang =match lang {
-//         LANG_EN=>lang,
-//         LANG_CN=>lang,
-//         _=>LANG_EN,
-//     };
-//     let lang=match lang.parse::<LanguageIdentifier>() {
-//         Ok(r) => r,
-//         Err(e) => panic!("lang parse err:{}",e),
-//     };
-//     match localizer().select(&[lang]) {
-//         Ok(r) => r,
-//         Err(_) => {},
-//     };
-// }
