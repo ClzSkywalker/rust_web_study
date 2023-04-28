@@ -1,13 +1,14 @@
 [package]
-name = "i18n"
+name = "web"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-ring = "0.16.19"
 common={path="../common"}
-# i18n
-rust-i18n = "1.1.4"
-once_cell = "1.17.0"
+orm={path="../orm"}
+service={path="../service"}
+ring = "0.16.19"
+axum = "0.6.12"
+tokio = { version = "1.27", features = ["full"] }

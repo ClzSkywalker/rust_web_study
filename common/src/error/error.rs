@@ -1,4 +1,4 @@
-use std::fmt;
+use std::fmt::{self, Debug};
 
 use super::i18n_key::ErrorKey;
 
@@ -11,7 +11,7 @@ use super::i18n_key::ErrorKey;
 #[derive(Debug)]
 pub struct CodeError {
     key: ErrorKey,
-    field: Vec<(String, String)>,
+    // field: Vec<(String, String)>,
 }
 
 impl fmt::Display for CodeError {

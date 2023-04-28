@@ -9,6 +9,7 @@ path="./src/lib.rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+ring = "0.16.19"
 # json
 serde = "1.0.160"
 # 单例
@@ -20,6 +21,10 @@ strum_macros = "0.24"
 tracing = "0.1"
 tracing-subscriber = "0.3.0"
 tracing-appender = "0.2.2"
+# Date and Time for Rust
+chrono = "0.4.24"
+# ulid
+rusty_ulid = "2.0.0"
 # i18n
 # fluent-bundle = "0.15.2"
 # 将资源文件加载到可执行文件中

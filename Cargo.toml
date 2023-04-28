@@ -7,7 +7,7 @@
 
 [workspace]
 # resolver = "2"
-members=["common","macros","i18n"]
+members=["common","macros","i18n","orm","migration","web"] #.
 exclude =[]
 
 # [dependencies]
