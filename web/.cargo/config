@@ -1,2 +1,3 @@
 [target.aarch64-linux-android]
-linker="D:\\data\\ndk\\android-ndk-r24\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\aarch64-linux-android21-clang.cmd"
+ar = "D:\\data\\ndk\\android-ndk-r25c\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\aarch64-linux-android-ar.exe"
+linker="D:\\data\\ndk\\android-ndk-r25c\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\aarch64-linux-android21-clang.cmd"

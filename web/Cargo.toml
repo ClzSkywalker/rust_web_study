@@ -9,6 +9,5 @@ edition = "2021"
 common={path="../common"}
 orm={path="../orm"}
 service={path="../service"}
-ring = "0.16.19"
 axum = "0.6.12"
 tokio = { version = "1.27", features = ["full"] }

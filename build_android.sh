@@ -1,1 +1,1 @@
-cargo build --release --target aarch64-linux-android --package web
+RUST_BACKTRACE=full TARGET_CC=aarch64-linux-android  cargo build --release --target aarch64-linux-android --package web
