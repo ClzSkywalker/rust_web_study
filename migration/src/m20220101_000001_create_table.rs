@@ -9,115 +9,133 @@ impl MigrationTrait for Migration {
         manager
             .create_table(
                 Table::create()
-                    .table(Cake::Table)
+                    .table(User::Table)
                     .if_not_exists()
                     .col(
-                        ColumnDef::new(Cake::Id)
+                        ColumnDef::new(Base::Id)
                             .integer()
                             .not_null()
                             .auto_increment()
                             .primary_key(),
                     )
-                    .col(ColumnDef::new(Cake::Name).string())
+                    .col(ColumnDef::new(Base::CreatedAt).date_time())
+                    .col(ColumnDef::new(Base::UpdatedAt).date_time())
+                    .col(ColumnDef::new(Base::DeletedAt).date_time())
+                    .col(ColumnDef::new(User::Oc).string().unique_key().not_null())
+                    .col(ColumnDef::new(User::TeamIdPort).string().not_null())
+                    .col(ColumnDef::new(User::NickName).string())
+                    .col(ColumnDef::new(User::MemberType).integer())
+                    .col(ColumnDef::new(User::RegisterType).integer())
+                    .col(ColumnDef::new(User::Picture).string())
+                    .col(ColumnDef::new(User::Email).string())
+                    .col(ColumnDef::new(User::Phone).string())
+                    .col(ColumnDef::new(User::Pwd).string())
+                    .col(ColumnDef::new(User::Version).string())
                     .to_owned(),
             )
-            .await
-            .expect("create cake");
+            .await?;
 
         manager
             .create_table(
                 Table::create()
-                    .table(Fruit::Table)
+                    .table(Team::Table)
                     .if_not_exists()
                     .col(
-                        ColumnDef::new(Fruit::Id)
+                        ColumnDef::new(Base::Id)
                             .integer()
                             .not_null()
                             .auto_increment()
                             .primary_key(),
                     )
-                    .col(ColumnDef::new(Fruit::Name).string())
-                    .col(ColumnDef::new(Fruit::CakeId).integer())
+                    .col(ColumnDef::new(Base::CreatedAt).date_time())
+                    .col(ColumnDef::new(Base::UpdatedAt).date_time())
+                    .col(ColumnDef::new(Base::DeletedAt).date_time())
+                    .col(ColumnDef::new(Team::Oc).string().unique_key().not_null())
+                    .col(ColumnDef::new(Team::CreatedBy).string())
+                    .col(ColumnDef::new(Team::Name).string())
+                    .col(ColumnDef::new(Team::Description).string())
                     .to_owned(),
             )
-            .await
-            .expect("create fruit");
+            .await?;
 
         manager
             .create_table(
                 Table::create()
-                    .table(CakeFilling::Table)
-                    .if_not_exists()
-                    .col(ColumnDef::new(CakeFilling::FillingId).integer())
-                    .col(ColumnDef::new(CakeFilling::CakeId).integer())
-                    .to_owned(),
-            )
-            .await
-            .expect("create cake_filling");
-
-        manager
-            .create_table(
-                Table::create()
-                    .table(Filling::Table)
+                    .table(UserToTeam::Table)
                     .if_not_exists()
                     .col(
-                        ColumnDef::new(Filling::Id)
+                        ColumnDef::new(Base::Id)
                             .integer()
                             .not_null()
                             .auto_increment()
                             .primary_key(),
                     )
-                    .col(ColumnDef::new(Filling::Name).string())
+                    .col(ColumnDef::new(Base::CreatedAt).date_time())
+                    .col(ColumnDef::new(Base::UpdatedAt).date_time())
+                    .col(ColumnDef::new(Base::DeletedAt).date_time())
+                    .col(ColumnDef::new(UserToTeam::Uid).string())
+                    .col(ColumnDef::new(UserToTeam::Tid).string())
+                    .col(ColumnDef::new(UserToTeam::Sort).integer())
+                    .index(Index::create().unique().name("udx_utt_uid_tid").col(UserToTeam::Uid).col(UserToTeam::Tid))
                     .to_owned(),
             )
-            .await
+            .await?;
+
+        Ok(())
     }
 
     async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
         manager
-            .drop_table(Table::drop().table(Cake::Table).to_owned())
-            .await
-            .expect("drop cake");
+            .drop_table(Table::drop().table(User::Table).to_owned())
+            .await?;
+
         manager
-            .drop_table(Table::drop().table(Fruit::Table).to_owned())
-            .await
-            .expect("drop fruit");
-        manager
-            .drop_table(Table::drop().table(CakeFilling::Table).to_owned())
-            .await
-            .expect("drop cake_filling");
-        manager
-            .drop_table(Table::drop().table(Filling::Table).to_owned())
-            .await
+            .drop_table(Table::drop().table(Team::Table).to_owned())
+            .await?;
+
+        manager.drop_table(Table::drop().table(UserToTeam::Table).to_owned()).await?;
+
+        Ok(())
     }
+}
+
+#[derive(Iden)]
+enum Base {
+    Id,
+    CreatedAt,
+    UpdatedAt,
+    DeletedAt,
 }
 
 /// Learn more at https://docs.rs/sea-query#iden
 #[derive(Iden)]
-enum Cake {
+enum User {
     Table,
-    Id,
-    Name,
+    Oc,
+    TeamIdPort,
+    NickName,
+    MemberType,
+    RegisterType,
+    Picture,
+    Email,
+    Phone,
+    Pwd,
+    Version,
 }
 
 #[derive(Iden)]
-enum Fruit {
+enum Team {
     Table,
-    Id,
+    Oc,
+    CreatedBy,
     Name,
-    CakeId,
+    Description,
 }
 
 #[derive(Iden)]
-enum CakeFilling {
+enum UserToTeam {
     Table,
-    CakeId,
-    FillingId,
-}
-
-#[derive(Iden)]
-enum Filling {
-    Table,
-    Id,
-    Name,
+    Uid,
+    Tid,
+    Sort,
 }
