@@ -1,6 +1,7 @@
 use migration::{Migrator, MigratorTrait};
+use model::cake;
 use rusqlite::Connection;
-use sea_orm::{ConnectOptions, Database, DbConn};
+use sea_orm::{ConnectOptions, Database, DbConn, EntityTrait, QueryFilter, ColumnTrait};
 pub mod model;
 
 // const DATABASE_URL: &str = "sqlite:./db/event_shop.db"; // sqlite::memory:
@@ -24,6 +25,8 @@ pub async fn init_connection(path: &str) -> Result<DbConn, Box<dyn std::error::E
     };
 
     Migrator::up(&db, None).await?;
+
+    let _a=cake::Entity::find().filter(cake::Column::Name.like("")).one(&db).await;
 
     // Cake::Entity::find_by_id(11).all()
 
