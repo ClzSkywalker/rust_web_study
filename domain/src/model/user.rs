@@ -1,6 +1,7 @@
 use sea_orm::entity::prelude::*;
+use serde::{Deserialize};
 
-#[derive(Clone, Debug, PartialEq, DeriveEntityModel)]
+#[derive(Clone, Debug, PartialEq, DeriveEntityModel,Deserialize)]
 #[sea_orm(table_name = "user")]
 pub struct Model {
     #[sea_orm(primary_key)]
@@ -19,7 +20,7 @@ pub struct Model {
     pub version:String
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, EnumIter, DeriveActiveEnum)]
+#[derive(Debug, Clone, PartialEq, Eq, EnumIter, DeriveActiveEnum,Deserialize)]
 #[sea_orm(rs_type = "i32", db_type = "Integer")]
 pub enum MemberType{
     #[sea_orm(num_value=0)]
@@ -30,7 +31,7 @@ pub enum MemberType{
     Permanent
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, EnumIter, DeriveActiveEnum)]
+#[derive(Debug, Clone, PartialEq, Eq, EnumIter, DeriveActiveEnum,Deserialize)]
 #[sea_orm(rs_type = "i32", db_type = "Integer")]
 pub enum RegisterType{
     #[sea_orm(num_value=1)]

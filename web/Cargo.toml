@@ -7,7 +7,9 @@ edition = "2021"
 
 [dependencies]
 common={path="../common"}
+domain={path="../domain"}
+api={path="../api"}
 orm={path="../orm"}
-service={path="../service"}
 axum = "0.6.12"
 tokio = { version = "1.27", features = ["full"] }
+sea-orm = { version = "0.11.2", features = ["sqlx-sqlite","runtime-tokio-rustls",  "macros" ] }

@@ -1,14 +1,16 @@
 [package]
-name = "orm"
+name = "domain"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-domain={path="../domain"}
 common={path="../common"}
+i18n={path="../i18n"}
+migration={path="../migration"}
 serde = "1.0.160"
+# tokio = { version = "1.6", features = ["full"] }
 sea-orm = { version = "0.11.2", features = ["sqlx-sqlite","runtime-tokio-rustls",  "macros" ] }
-tokio = { version = "1.27.0", features = ["full"] }
-futures = "0.3"
+# sqlite
+rusqlite = { version = "0.27", features = ["bundled"] }

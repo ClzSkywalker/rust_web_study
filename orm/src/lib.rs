@@ -1,43 +1,16 @@
-use migration::{Migrator, MigratorTrait};
-use model::cake;
-use rusqlite::Connection;
-use sea_orm::{ConnectOptions, Database, DbConn, EntityTrait, QueryFilter, ColumnTrait};
-pub mod model;
+use std::error::Error;
 
-// const DATABASE_URL: &str = "sqlite:./db/event_shop.db"; // sqlite::memory:
+pub mod infra;
+pub mod service;
 
-pub async fn init_connection(path: &str) -> Result<DbConn, Box<dyn std::error::Error>> {
-    match Connection::open(path) {
-        Ok(_) => {}
-        Err(r) => {
-            common::log::log::error(r.to_string());
-            return Err(Box::new(r));
-        }
-    }
-
-    let db_path = "sqlite://".to_string() + path;
-    let db = match Database::connect(ConnectOptions::new(db_path)).await {
+pub async fn init() -> Result<sea_orm::DatabaseConnection, Box<dyn Error>> {
+    let r = match domain::init_connection("./event_shop.db").await {
         Ok(r) => r,
         Err(r) => {
+            println!("db err:{}", r);
             common::log::log::error(r.to_string());
-            return Err(Box::new(r));
+            return Err(r);
         }
     };
-
-    Migrator::up(&db, None).await?;
-
-    let _a=cake::Entity::find().filter(cake::Column::Name.like("")).one(&db).await;
-
-    // Cake::Entity::find_by_id(11).all()
-
-    // let t = cake::ActiveModel {
-    //     title: Set(String::from("title")),
-    //     text: Set(String::from("text")),
-    //     oc: Set(String::from(common::ulid_genrate())),
-    //     ..Default::default()
-    // };
-
-    // let _a = t.insert(&db).await?;
-
-    Ok(db)
+    Ok(r)
 }
